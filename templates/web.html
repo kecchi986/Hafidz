@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementasi Monte Carlo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#" class="tab-link" data-tab="home">Beranda</a></li>
+            <li><a href="#" class="tab-link" data-tab="about">Tentang Emas</a></li>
+            <li><a href="#" class="tab-link" data-tab="history">Data Historis</a></li>
+            <li><a href="#" class="tab-link" data-tab="rng">RNG</a></li>
+
+        </ul>
+    </nav>
+
+    <main>
+        <div id="home" class="tab-content">
+            <h1>Selamat Datang di Aplikasi Prediksi Emas</h1>
+            <p>Aplikasi ini memprediksi harga emas berdasarkan data tahun sebelumnya.</p>
+<p>Hafidz Muhammad (301220038)</p>
+<p>Teknik Informatika Semester 5</p>
+<p>Universitas Bale Bandung</p>
+        </div>
+
+        <div id="about" class="tab-content">
+            <h2>Tentang Emas</h2>
+            <p>Emas adalah logam mulia yang memiliki nilai ekonomi tinggi dan sering dijadikan investasi. Harganya dipengaruhi oleh banyak faktor termasuk permintaan pasar dan kondisi ekonomi global.</p>
+        </div>
+
+        <div id="history" class="tab-content">
+    <h2>Data Historis</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tahun</th>
+                <th>Total Emas (Kilogram)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in produksi_data %}
+                <tr>
+                    <td>{{ item['tahun'] }}</td>
+                    <td>{{ item['total'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+        <div id="rng" class="tab-content">
+    <h2>Hasil Prediksi Emas</h2>
+
+    <h3>Hitung Interval</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tahun</th>
+                <th>Jumlah Emas</th>
+                <th>Probabilitas</th>
+                <th>Kumulatif</th>
+                <th>Interval</th>
+            </tr>
+        </thead>
+        <tbody id="interval-data">
+            {% for interval in intervals %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ interval['tahun'] }}</td>
+                    <td>{{ interval['jumlah_emas'] }}</td>
+                    <td>{{ '%.4f' % interval['probabilitas'] }}</td>
+                    <td>{{ '%.4f' % interval['kumulatif'] }}</td>
+                    <td>{{ '%.4f' % interval['interval'][0] }} - {{ '%.4f' % interval['interval'][1] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Generate Bilangan Random</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Zi</th>
+                <th>(a*Zi) + C</th>
+                <th>((a*Zi)+C) mod m</th>
+                <th>Angka Tiga Digit</th>
+            </tr>
+        </thead>
+        <tbody id="random-data">
+            {% for rng in rng_data %}
+                <tr>
+                    <td>{{ rng['zi'] }}</td>
+                    <td>{{ rng['calculated'] }}</td>
+                    <td>{{ rng['mod'] }}</td>
+                    <td>{{ rng['angka_tiga_digit'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Hasil Prediksi</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Tahun</th>
+            <th>Total Emas (Kilogram)</th>
+        </tr>
+    </thead>
+    <tbody id="prediction-data">
+        {% for prediction in predictions %}
+            <tr>
+                <td>{{ prediction['tahun'] }}</td>
+                <td>{{ prediction['prediksi_emas'] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+</body>
+</html>
